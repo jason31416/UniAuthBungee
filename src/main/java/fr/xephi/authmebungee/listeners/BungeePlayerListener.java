@@ -126,6 +126,14 @@ public class BungeePlayerListener implements Listener, SettingsDependent {
             return;
         }
         event.setCancelled(true);
+
+        final ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("UniAuthReloaded");
+        out.writeUTF("chat");
+        out.writeUTF(authPlayer.getName());
+        out.writeUTF(event.getMessage());
+        final ServerInfo server = player.getServer().getInfo();
+        server.sendData("BungeeCord", out.toByteArray(), false);
     }
 
     private boolean isAuthServer(ServerInfo serverInfo) {

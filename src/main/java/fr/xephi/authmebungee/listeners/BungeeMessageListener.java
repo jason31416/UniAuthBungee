@@ -63,6 +63,14 @@ public class BungeeMessageListener implements Listener, SettingsDependent {
         in.readUTF(); // Skip ONLINE/ALL parameter
 
         // Let's check the subchannel
+        if(in.readUTF().equals("UniAuth")){
+            String type = in.readUTF();
+            if(type.equals("login")) {
+                handleOnLogin(in);
+            }
+            return;
+        }
+
         if (!in.readUTF().equals("AuthMe.v2.Broadcast")) {
             return;
         }
